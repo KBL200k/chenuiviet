@@ -1,78 +1,458 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-    <title>Chè núi Việt</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chè Núi Việt - Hương Vị Thiên Nhiên</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS để tùy chỉnh giao diện */
+        /* Thiết lập nền */
         body {
-            font-family: 'Times New Roman', Times, serif, sans-serif;
-            background-color: #c7f2cc;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #10214b;
-            color: #fff;
-            padding: 20px;
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+        background: url('https://imgur.com/fjPBDvH.png') no-repeat center center;
+        background-size: cover;
+        background-attachment: fixed; /* Giữ nền cố định khi cuộn trang */
+        position: relative;
+    }
+
+    /* Xóa lớp phủ mờ */
+    body::before {
+        content: none;
+}
+
+
+        /* Thanh điều hướng */
+        .navbar {
+            background-color: rgba(10, 42, 67, 0.9); /* Làm mờ thanh điều hướng */
+            padding: 15px 0;
             text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 0 20px;
+            padding: 10px 15px;
+            transition: 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #14a814;
+            border-radius: 5px;
+        }
+
+        /* Tiêu đề */
+        header {
+            background: linear-gradient(90deg, #0a2a43, #1f7a1f);
+            color: white;
+            padding: 60px 20px 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            border-bottom: 5px solid #14a814;
+        }
+
+        /* Hộp nội dung */
         .container {
             max-width: 900px;
             margin: 30px auto;
             padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
         }
-        img {
-            max-width: 100%;
-            height: auto;
+        h2 {
+            color: #128012;
+            border-left: 5px solid #128012;
+            padding-left: 10px;
+        }
+        p {
+            color: #333;
+            line-height: 1.6;
+        }
+        .product img {
+            width: 70%; /* Thu nhỏ ảnh 70% */
             display: block;
             margin: 0 auto;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .product img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px; /* Thêm padding để ảnh không sát viền */
+            width: 90%; /* Giảm kích thước modal */
+            max-width: 700px; /* Giảm max-width */
+            text-align: center;
+        }
+
+        .modal-content img {
+            width: auto; /* Để ảnh tự động điều chỉnh */
+            max-width: 90%; /* Ảnh không vượt quá 90% modal */
+            max-height: 80vh; /* Ảnh không vượt quá 80% chiều cao màn hình */
+        }
+
+        .close {
+            color: black;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 40px; /* Tăng kích thước nút close */
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 20px; /* Tăng kích thước padding */
+            margin-top: -30px; /* Điều chỉnh vị trí */
+            color: white;
+            font-weight: bold;
+            font-size: 30px; /* Tăng kích thước nút prev/next */
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+        
+        .prev {
+            left: 10px; /* Đặt nút prev sát bên trái */
+            border-radius: 0 3px 3px 0;
+        }
+
+        .next {
+            right: 10px; /* Đặt nút next sát bên phải */
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        /* Danh sách hướng dẫn */
+        ol {
+            padding-left: 20px;
+        }
+        ol li {
+            color: #333;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+        ol li:hover {
+            color: #0b6623;
+        }
+
+        /* Thông điệp cảm ơn */
+        .verify-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(90deg, #128012, #0a2a43);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product p {
+            font-size: 1.5em; /* Tăng kích thước chữ */
+            font-weight: bold; /* Làm chữ đậm */
+            color: #333; /* Màu chữ tối hơn */
+            text-transform: uppercase; /* Chuyển chữ thành in hoa */
+            letter-spacing: 1px; /* Tăng khoảng cách giữa các chữ */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng đổ nhẹ */
+            transition: color 0.3s ease; /* Hiệu ứng chuyển màu mượt mà */
+        }
+
+        .product:hover p {
+            color: #007bff; /* Màu chữ khi hover */
+        }
+
+        /* Hiệu ứng nhấp nháy (tùy chọn) */
+        @keyframes blink {
+            50% {
+                opacity: 0.6;
+            }
+        }
+
+        .product p.blink {
+            animation: blink 1s infinite;
+        }
+        .container1 {
+            text-align: center;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .row img {
+            width: 200px;
+            height: auto;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .modal-content img {
+            width: auto;
+            max-width: 90%;
+            max-height: 80vh;
+        }
+
+        .close {
+            color: black;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .store-icon {
+            display: block;
+            width: 50px; /* Tùy chỉnh kích thước biểu tượng */
+            margin: 20px auto; /* Căn giữa biểu tượng */
+        }
+
+        .store-icon img {
+            width: 100%;
+            display: block;
         }
     </style>
 </head>
 <body>
+    <!-- Thanh điều hướng -->
+    <div class="navbar">
+        <a href="#gioithieu">Giới thiệu sản phẩm</a>
+        <a href="#hinhanh">Hình ảnh sản phẩm</a>
+        <a href="#chungnhan">Chứng nhận</a>
+        <a href="#lienhe">Thông tin liên hệ</a>
+    </div>
+
     <header>
-        <h1 style="color: rgb(16, 198, 22);font-family: 'Roboto', sans-serif;">Chè núi Việt</h1>
+        Chè Núi Việt - Hương Vị Thiên Nhiên
     </header>
-    <div class="container">
-        <h2 style="color: rgb(16, 198, 22);">Thông Tin Sản Phẩm</h2>
-        <p>Trà núi Việt được sản xuất 100% trà xanh tự nhiên có nguồn gốc từ Tân Cương, Thái Nguyên. Sản phẩm được sản suất đạt chuẩn vệ sinh an toàn thực phẩm.</p>
-        <p>Các búp trà non được tuyển chọn kĩ lương mang lại hương vị thanh mát cho người dùng.</p>
-        <h2 style="color: rgb(128, 217, 12);">Chứng chỉ chứng nhận sản phẩm</h2>
-        <img src="https://i.imgur.com/f90Iq24.jpg" alt="Hình ảnh mô tả">
-        <img src="https://i.imgur.com/9BHts99.jpg" alt="Hình ảnh mô tả">
-    </div>
-    <div class="container">
-        <h2 style="color: rgb(14, 14, 191);">Hướng dẫn sử dụng</h2>
-        <ol>
-            <li style="color: #333;">Đun nước: Một lần nữa chắc chắn rằng nước bạn có là nước đóng chai đã được lọc, không phải nước khoáng hay nước máy. Hầu hết các loại trà đều pha trà dưới nhiệt độ sôi, trong khoảng 75°C – 98°C tuỳ loại.</li>
-            <li style="color: #333;">Làm nóng ấm chén: Khi ấm đun nước gần đạt độ sôi, bạn rót nước vào ấm, đậy nắp lại. Khi ấm trà nóng lên, bạn rót hết nước ra chuyên trà và các ly.</li>
-            <li style="color: #333;">Đong trà: Cho trà vào ấm, lượng trà ít nhiều tuỳ từng loại. Thông thường là 1/5 đến 1/2 ấm trà.</li>
-            <li style="color: #333;">Đánh thức trà: Rót nước nóng ngập trà và đổ đi càng nhanh càng tốt. Đây không phải là nước để uống. Nó có tác dụng “đánh thức” để các lá trà bắt đầu nở ra. Nước nóng đánh thức trà không phải là nước sôi.</li>
-            <li style="color: #333;">Hãm trà: Đổ nước nóng vào đầy ấm, đậy nắp ấm và hãm trà trong khoảng 10-40 giây tuỳ loại trà. Đây là công đoạn quan trọng nhất. Hãy đảm bảo nhiệt độ nước và thời gian hãm phù hợp với loại trà.</li>
-            <li style="color: #333;">Rót trà: Sau 10-40 giây, rót hết nước từ ấm trà vào chuyên. Rồi từ chuyên mới rót ra các chén uống trà. Chuyên trà lúc này rất quan trọng, giúp bạn ngừng ngay quá trình hãm trà trong ấm. Bạn nên rót nhanh và rót hết nước trong ấm ra chuyên. Đảm bảo nước trong ấm được rót ra hết, không để nước dư trong ấm. Mở nắp ấm sau khi rót trà ra chuyên, để trà không bị “nẫu” vì nhiệt độ cao trong ấm.</li>
-            <li style="color: #333;">Hãm trà lần tiếp theo: Lặp lại bước 5 và bước 6 cho các lần pha tiếp theo. Lần hãm sau thường có thời gian lâu hơn so với lần pha trước. Nếu nước trà đầu tiên quá nhạt hoặc quá đậm, hãy điều chỉnh thời gian ở lần hãm tiếp theo. Trà ngon và pha khéo, bạn có thể lặp lại 5-8 lần hãm trà, trước khi hương vị trở nên quá nhạt.</li>
-        </ol>
-    </div>
-    
-    <div class="container">
-        <h2 style="color: rgb(16, 198, 22);">Giấy chứng nhận</h2>
-        <!-- <p>Trà núi Việt được sản xuất 100% trà xanh tự nhiên có nguồn gốc từ Tân Cương, Thái Nguyên. Sản phẩm được sản suất đạt chuẩn vệ sinh an toàn thực phẩm.</p>
-        <p>Các búp trà non được tuyển chọn kĩ lương mang lại hương vị thanh mát cho người dùng.</p> -->
-        <!-- <h2>Hình Ảnh</h2> -->
-        <img src="https://i.imgur.com/7VipU7F.jpg" alt="Hình ảnh mô tả">
-        <img src="https://i.imgur.com/kRU6w7l.jpg" alt="Hình ảnh mô tả">
-        <img src="https://i.imgur.com/xoDO619.jpg" alt="Hình ảnh mô tả">
-    </div>
-    <div class="verify-title"
-             data-track-content
-             data-content-name="productDesc"
-             data-content-region-name="product_detail"
-             data-content-index="3"
-             style="color: rgb(34, 32, 152);">
-            CẢM ƠN QUÝ KHÁCH ĐÃ SỬ DỤNG SẢN PHẨM CỦA CHÚNG TÔI
+
+    <div class="container" id="gioithieu">
+        <h2>Thông Tin Sản Phẩm</h2>
+        <p>Trà núi Việt được sản xuất 100% trà xanh tự nhiên có nguồn gốc từ Tân Cương, Thái Nguyên. Sản phẩm được sản xuất đạt chuẩn vệ sinh an toàn thực phẩm.</p>
+        <p>Các búp trà non được tuyển chọn kỹ lưỡng, mang lại hương vị thanh mát cho người dùng.</p>
+        <div class="container">
+            <h2 style="color: rgb(14, 14, 191);">Hướng dẫn sử dụng</h2>
+            <ol>
+                <li style="color: #333;">Đun nước: Một lần nữa chắc chắn rằng nước bạn có là nước đóng chai đã được lọc, không phải nước khoáng hay nước máy. Hầu hết các loại trà đều pha trà dưới nhiệt độ sôi, trong khoảng 75°C – 98°C tuỳ loại.</li>
+                <li style="color: #333;">Làm nóng ấm chén: Khi ấm đun nước gần đạt độ sôi, bạn rót nước vào ấm, đậy nắp lại. Khi ấm trà nóng lên, bạn rót hết nước ra chuyên trà và các ly.</li>
+                <li style="color: #333;">Đong trà: Cho trà vào ấm, lượng trà ít nhiều tuỳ từng loại. Thông thường là 1/5 đến 1/2 ấm trà.</li>
+                <li style="color: #333;">Đánh thức trà: Rót nước nóng ngập trà và đổ đi càng nhanh càng tốt. Đây không phải là nước để uống. Nó có tác dụng “đánh thức” để các lá trà bắt đầu nở ra. Nước nóng đánh thức trà không phải là nước sôi.</li>
+                <li style="color: #333;">Hãm trà: Đổ nước nóng vào đầy ấm, đậy nắp ấm và hãm trà trong khoảng 10-40 giây tuỳ loại trà. Đây là công đoạn quan trọng nhất. Hãy đảm bảo nhiệt độ nước và thời gian hãm phù hợp với loại trà.</li>
+                <li style="color: #333;">Rót trà: Sau 10-40 giây, rót hết nước từ ấm trà vào chuyên. Rồi từ chuyên mới rót ra các chén uống trà. Chuyên trà lúc này rất quan trọng, giúp bạn ngừng ngay quá trình hãm trà trong ấm. Bạn nên rót nhanh và rót hết nước trong ấm ra chuyên. Đảm bảo nước trong ấm được rót ra hết, không để nước dư trong ấm. Mở nắp ấm sau khi rót trà ra chuyên, để trà không bị “nẫu” vì nhiệt độ cao trong ấm.</li>
+                <li style="color: #333;">Hãm trà lần tiếp theo: Lặp lại bước 5 và bước 6 cho các lần pha tiếp theo. Lần hãm sau thường có thời gian lâu hơn so với lần pha trước. Nếu nước trà đầu tiên quá nhạt hoặc quá đậm, hãy điều chỉnh thời gian ở lần hãm tiếp theo. Trà ngon và pha khéo, bạn có thể lặp lại 5-8 lần hãm trà, trước khi hương vị trở nên quá nhạt.</li>
+            </ol>
         </div>
+    </div>
+
+    <div class="container" id="hinhanh">
+        <h2>Danh sách sản phẩm</h2>
+
+            <div class="product" onclick="openModal(0)">
+                <img src="https://imgur.com/2RRCKKB.png" alt="Trà Tân Cương - Thái Nguyên - 100g">
+                <p class="blink">Trà Tân Cương - Thái Nguyên - 100g</p>
+            </div>
+            
+            <div class="product" onclick="openModal(1)">
+                <img src="https://imgur.com/q6a2ifM.png" alt="Trà Tân Cương - Thái Nguyên - 50g">
+                <p class="blink">Trà Tân Cương - Thái Nguyên - 50g</p>
+            </div>
+            
+            <div class="product" onclick="openModal(2)">
+                <img src="https://imgur.com/krS5IlT.png" alt="Trà xanh đặc sản - 100g">
+                <p class="blink">Trà xanh đặc sản - 100g</p>
+            </div>
+
+            <!-- Modal -->
+            <div id="imageModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                    <span class="prev" onclick="prevImage()">&#10094;</span>
+                    <img id="modalImage" src="" alt="">
+                    <span class="next" onclick="nextImage()">&#10095;</span>
+                </div>
+            </div>
+
+            <script>
+                const productImages = [
+                    ["https://imgur.com/M7afeRM.jpg", "https://imgur.com/PPdU79y.jpg", "https://imgur.com/fVJIWe3.jpg"],
+                    ["https://imgur.com/xtg0XkG.jpg", "https://imgur.com/HAwjLQo.jpg", "https://imgur.com/33q4kMh.jpg"],
+                    ["https://imgur.com/t89we2C.jpg", "https://imgur.com/jBt43il.jpg", "https://imgur.com/KnAQd15.jpg"]
+                ];
+                let currentIndex = 0;
+                let currentProduct = 0;
+                const modal = document.getElementById("imageModal");
+                const modalImage = document.getElementById("modalImage");
+                const products = document.querySelectorAll(".product");
+                const closeBtn = document.querySelector(".close");
+                const prevBtn = document.querySelector(".prev");
+                const nextBtn = document.querySelector(".next");
+            
+                products.forEach((product, index) => {
+                    product.addEventListener("click", () => openModal(index));
+                });
+            
+                closeBtn.addEventListener("click", closeModal);
+                prevBtn.addEventListener("click", prevImage);
+                nextBtn.addEventListener("click", nextImage);
+            
+                function openModal(index) {
+                    if (productImages[index] && productImages[index].length > 0) {
+                        currentProduct = index;
+                        currentIndex = 0;
+                        modalImage.src = productImages[currentProduct][currentIndex];
+                        modal.style.display = "flex";
+                    } else {
+                        console.error("No images available for product index: " + index);
+                    }
+                }
+            
+                function closeModal() {
+                    modal.style.display = "none";
+                }
+            
+                function prevImage() {
+                    if (productImages[currentProduct] && productImages[currentProduct].length > 0) {
+                        currentIndex = (currentIndex > 0) ? currentIndex - 1 : productImages[currentProduct].length - 1;
+                        modalImage.src = productImages[currentProduct][currentIndex];
+                    }
+                }
+            
+                function nextImage() {
+                    if (productImages[currentProduct] && productImages[currentProduct].length > 0) {
+                        currentIndex = (currentIndex < productImages[currentProduct].length - 1) ? currentIndex + 1 : 0;
+                        modalImage.src = productImages[currentProduct][currentIndex];
+                    }
+                }
+            </script>
+    </div>
+
+    <div class="container" id="chungnhan">
+        <h2>Chứng nhận</h2>
+        <div class="row">
+            <img src="https://i.imgur.com/7VipU7F.jpg" alt="Giấy chứng nhận" onclick="openModal1('https://i.imgur.com/7VipU7F.jpg', 0)">
+            <img src="https://i.imgur.com/kRU6w7l.jpg" alt="Giấy chứng nhận" onclick="openModal1('https://i.imgur.com/kRU6w7l.jpg', 1)">
+            <img src="https://i.imgur.com/xoDO619.jpg" alt="Giấy chứng nhận" onclick="openModal1('https://i.imgur.com/xoDO619.jpg', 2)">
+        </div>
+        <div class="row">
+            <img src="https://i.imgur.com/xoDO619.jpg" alt="Giấy chứng nhận" onclick="openModal1('https://i.imgur.com/f90Iq24.jpg', 3)">
+            <img src="https://i.imgur.com/xoDO619.jpg" alt="Giấy chứng nhận" onclick="openModal1('https://i.imgur.com/9BHts99.jpg', 4)">
+        </div>
+
+        <div id="imageModal1" class="modal"> <div class="modal-content">
+                <span class="close" onclick="closeModal1()">&times;</span>
+                <span class="prev" onclick="prevImage1()">&#10094;</span>
+                <img id="modalImage1" src="" alt=""> <span class="next" onclick="nextImage1()">&#10095;</span>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        const certificateImages1 = [
+            "https://i.imgur.com/7VipU7F.jpg",
+            "https://i.imgur.com/kRU6w7l.jpg",
+            "https://i.imgur.com/xoDO619.jpg",
+            "https://i.imgur.com/xoDO619.jpg",
+            "https://i.imgur.com/xoDO619.jpg"
+        ];
+        let currentIndex1 = 0;
+
+        function openModal1(src, index) {
+            currentIndex1 = index;
+            document.getElementById("modalImage1").src = src; // Sửa id thành modalImage1
+            document.getElementById("imageModal1").style.display = "flex"; // Sửa id thành imageModal1
+        }
+
+        function closeModal1() {
+            document.getElementById("imageModal1").style.display = "none"; // Sửa id thành imageModal1
+        }
+
+        function prevImage1() {
+            currentIndex1 = (currentIndex1 > 0) ? currentIndex1 - 1 : certificateImages1.length - 1;
+            document.getElementById("modalImage1").src = certificateImages1[currentIndex1]; // Sửa id thành modalImage1
+        }
+
+        function nextImage1() {
+            currentIndex1 = (currentIndex1 < certificateImages1.length - 1) ? currentIndex1 + 1 : 0;
+            document.getElementById("modalImage1").src = certificateImages1[currentIndex1]; // Sửa id thành modalImage1
+        }
+    </script>
+
+    <div class="container" id="lienhe">
+        <h2>Thông Tin Liên Hệ</h2>
+        <p><b>Địa chỉ:</b> Xóm 5, Tân Cương, Thái Nguyên</p>
+        <p><b>Điện thoại:</b> 0123 456 789</p>
+        <p><b>Email:</b> info@chenuiviet.com</p>
+        <a href="https://shopee.vn/search?keyword=tr%C3%A0%20t%C3%A2n%20c%C6%B0%C6%A1ng%20th%C3%A1i%20nguy%C3%AAn&locations=H%25C3%25A0%2520N%25E1%25BB%2599i&noCorrection=true&page=0" target="_blank" class="store-icon">
+            <img src="https://imgur.com/844LrPu.png" alt="Cửa hàng">
+        </a>
+</div>
+    
+    <div class="verify-title">
+        CẢM ƠN QUÝ KHÁCH ĐÃ SỬ DỤNG SẢN PHẨM CỦA CHÚNG TÔI
+    </div>
 </body>
 </html>
