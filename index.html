@@ -26,7 +26,7 @@
 
         /* Thanh điều hướng */
         .navbar {
-            background-color: rgba(10, 42, 67, 0.9); /* Làm mờ thanh điều hướng */
+            background-color: rgba(10, 42, 67, 0.7);
             padding: 15px 0;
             text-align: center;
             position: fixed;
@@ -36,6 +36,7 @@
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
+
         .navbar a {
             color: white;
             text-decoration: none;
@@ -44,11 +45,24 @@
             padding: 10px 15px;
             transition: 0.3s;
         }
+
         .navbar a:hover {
             background-color: #14a814;
             border-radius: 5px;
         }
 
+        /* Media query cho màn hình có chiều rộng nhỏ hơn hoặc bằng 768px */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px 0; /* Giảm padding */
+            }
+
+            .navbar a {
+                display: block; /* Hiển thị các liên kết theo chiều dọc */
+                margin: 5px 0; /* Giảm margin */
+                padding: 8px 10px; /* Giảm padding */
+            }
+        }
         /* Tiêu đề */
         header {
             background: linear-gradient(90deg, #0a2a43, #1f7a1f);
@@ -293,18 +307,6 @@
         <h2>Thông Tin Sản Phẩm</h2>
         <p>Trà núi Việt được sản xuất 100% trà xanh tự nhiên có nguồn gốc từ Tân Cương, Thái Nguyên. Sản phẩm được sản xuất đạt chuẩn vệ sinh an toàn thực phẩm.</p>
         <p>Các búp trà non được tuyển chọn kỹ lưỡng, mang lại hương vị thanh mát cho người dùng.</p>
-        <div class="container">
-            <h2 style="color: rgb(14, 14, 191);">Hướng dẫn sử dụng</h2>
-            <ol>
-                <li style="color: #333;">Đun nước: Một lần nữa chắc chắn rằng nước bạn có là nước đóng chai đã được lọc, không phải nước khoáng hay nước máy. Hầu hết các loại trà đều pha trà dưới nhiệt độ sôi, trong khoảng 75°C – 98°C tuỳ loại.</li>
-                <li style="color: #333;">Làm nóng ấm chén: Khi ấm đun nước gần đạt độ sôi, bạn rót nước vào ấm, đậy nắp lại. Khi ấm trà nóng lên, bạn rót hết nước ra chuyên trà và các ly.</li>
-                <li style="color: #333;">Đong trà: Cho trà vào ấm, lượng trà ít nhiều tuỳ từng loại. Thông thường là 1/5 đến 1/2 ấm trà.</li>
-                <li style="color: #333;">Đánh thức trà: Rót nước nóng ngập trà và đổ đi càng nhanh càng tốt. Đây không phải là nước để uống. Nó có tác dụng “đánh thức” để các lá trà bắt đầu nở ra. Nước nóng đánh thức trà không phải là nước sôi.</li>
-                <li style="color: #333;">Hãm trà: Đổ nước nóng vào đầy ấm, đậy nắp ấm và hãm trà trong khoảng 10-40 giây tuỳ loại trà. Đây là công đoạn quan trọng nhất. Hãy đảm bảo nhiệt độ nước và thời gian hãm phù hợp với loại trà.</li>
-                <li style="color: #333;">Rót trà: Sau 10-40 giây, rót hết nước từ ấm trà vào chuyên. Rồi từ chuyên mới rót ra các chén uống trà. Chuyên trà lúc này rất quan trọng, giúp bạn ngừng ngay quá trình hãm trà trong ấm. Bạn nên rót nhanh và rót hết nước trong ấm ra chuyên. Đảm bảo nước trong ấm được rót ra hết, không để nước dư trong ấm. Mở nắp ấm sau khi rót trà ra chuyên, để trà không bị “nẫu” vì nhiệt độ cao trong ấm.</li>
-                <li style="color: #333;">Hãm trà lần tiếp theo: Lặp lại bước 5 và bước 6 cho các lần pha tiếp theo. Lần hãm sau thường có thời gian lâu hơn so với lần pha trước. Nếu nước trà đầu tiên quá nhạt hoặc quá đậm, hãy điều chỉnh thời gian ở lần hãm tiếp theo. Trà ngon và pha khéo, bạn có thể lặp lại 5-8 lần hãm trà, trước khi hương vị trở nên quá nhạt.</li>
-            </ol>
-        </div>
     </div>
 
     <div class="container" id="hinhanh">
@@ -388,7 +390,18 @@
                 }
             </script>
     </div>
-
+    <div class="container">
+        <h2 style="color: rgb(14, 14, 191);">Hướng dẫn sử dụng</h2>
+        <ol>
+            <li style="color: #333;">Đun nước: Một lần nữa chắc chắn rằng nước bạn có là nước đóng chai đã được lọc, không phải nước khoáng hay nước máy. Hầu hết các loại trà đều pha trà dưới nhiệt độ sôi, trong khoảng 75°C – 98°C tuỳ loại.</li>
+            <li style="color: #333;">Làm nóng ấm chén: Khi ấm đun nước gần đạt độ sôi, bạn rót nước vào ấm, đậy nắp lại. Khi ấm trà nóng lên, bạn rót hết nước ra chuyên trà và các ly.</li>
+            <li style="color: #333;">Đong trà: Cho trà vào ấm, lượng trà ít nhiều tuỳ từng loại. Thông thường là 1/5 đến 1/2 ấm trà.</li>
+            <li style="color: #333;">Đánh thức trà: Rót nước nóng ngập trà và đổ đi càng nhanh càng tốt. Đây không phải là nước để uống. Nó có tác dụng “đánh thức” để các lá trà bắt đầu nở ra. Nước nóng đánh thức trà không phải là nước sôi.</li>
+            <li style="color: #333;">Hãm trà: Đổ nước nóng vào đầy ấm, đậy nắp ấm và hãm trà trong khoảng 10-40 giây tuỳ loại trà. Đây là công đoạn quan trọng nhất. Hãy đảm bảo nhiệt độ nước và thời gian hãm phù hợp với loại trà.</li>
+            <li style="color: #333;">Rót trà: Sau 10-40 giây, rót hết nước từ ấm trà vào chuyên. Rồi từ chuyên mới rót ra các chén uống trà. Chuyên trà lúc này rất quan trọng, giúp bạn ngừng ngay quá trình hãm trà trong ấm. Bạn nên rót nhanh và rót hết nước trong ấm ra chuyên. Đảm bảo nước trong ấm được rót ra hết, không để nước dư trong ấm. Mở nắp ấm sau khi rót trà ra chuyên, để trà không bị “nẫu” vì nhiệt độ cao trong ấm.</li>
+            <li style="color: #333;">Hãm trà lần tiếp theo: Lặp lại bước 5 và bước 6 cho các lần pha tiếp theo. Lần hãm sau thường có thời gian lâu hơn so với lần pha trước. Nếu nước trà đầu tiên quá nhạt hoặc quá đậm, hãy điều chỉnh thời gian ở lần hãm tiếp theo. Trà ngon và pha khéo, bạn có thể lặp lại 5-8 lần hãm trà, trước khi hương vị trở nên quá nhạt.</li>
+        </ol>
+    </div>
     <div class="container" id="chungnhan">
         <h2>Chứng nhận</h2>
         <div class="row">
@@ -443,10 +456,10 @@
 
     <div class="container" id="lienhe">
         <h2>Thông Tin Liên Hệ</h2>
-        <p><b>Địa chỉ:</b> Xóm 5, Tân Cương, Thái Nguyên</p>
-        <p><b>Điện thoại:</b> 0123 456 789</p>
+        <p><b>Địa chỉ:</b> Xã Tiên Hội - huyện  Đai Từ - Thái Nguyên</p>
+        <p><b>Điện thoại:</b> 0966181811</p>
         <p><b>Email:</b> info@chenuiviet.com</p>
-        <a href="https://shopee.vn/search?keyword=tr%C3%A0%20t%C3%A2n%20c%C6%B0%C6%A1ng%20th%C3%A1i%20nguy%C3%AAn&locations=H%25C3%25A0%2520N%25E1%25BB%2599i&noCorrection=true&page=0" target="_blank" class="store-icon">
+        <a href="https://shopee.vn/huybdndh" target="_blank" class="store-icon">
             <img src="https://imgur.com/844LrPu.png" alt="Cửa hàng">
         </a>
 </div>
