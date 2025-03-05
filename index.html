@@ -25,7 +25,7 @@
 
 
         /* Thanh điều hướng */
-        .navbar {
+        /* .navbar {
             background-color: rgba(10, 42, 67, 0.7);
             padding: 15px 0;
             text-align: center;
@@ -49,19 +49,62 @@
         .navbar a:hover {
             background-color: #14a814;
             border-radius: 5px;
-        }
+        } */
 
         /* Media query cho màn hình có chiều rộng nhỏ hơn hoặc bằng 768px */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 10px 0; /* Giảm padding */
-            }
+        .menu-button {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            background-color: rgba(10, 42, 67, 0.9);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            z-index: 1001;
+        }
 
-            .navbar a {
-                display: block; /* Hiển thị các liên kết theo chiều dọc */
-                margin: 5px 0; /* Giảm margin */
-                padding: 8px 10px; /* Giảm padding */
-            }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: rgba(10, 42, 67, 0.9);
+            padding-top: 60px;
+            transition: 0.3s;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            transition: 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #14a814;
+            border-radius: 5px;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Hiển thị navbar khi mở */
+        .show-menu {
+            left: 0 !important;
         }
         /* Tiêu đề */
         header {
@@ -226,18 +269,21 @@
             text-align: center;
         }
 
-        .row {
+        #row {
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Hiển thị theo cột */
+            align-items: center; /* Căn giữa hình ảnh */
+            gap: 15px; /* Tạo khoảng cách giữa ảnh */
             margin-bottom: 20px;
         }
 
-        .row img {
-            width: 200px;
+        #row img {
+            width: 80%; /* Giữ kích thước ảnh */
             height: auto;
-            margin: 0 10px;
             cursor: pointer;
         }
+
+
 
         .modal {
             display: none;
@@ -280,7 +326,7 @@
         }
         .store-icon {
             display: block;
-            width: 50px; /* Tùy chỉnh kích thước biểu tượng */
+            width: 40px; /* Tùy chỉnh kích thước biểu tượng */
             margin: 20px auto; /* Căn giữa biểu tượng */
         }
 
@@ -288,11 +334,59 @@
             width: 100%;
             display: block;
         }
+        .product-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .product-info .blink {
+            flex-grow: 1; /* Giữ chữ mở rộng chiếm khoảng trống còn lại */
+            margin-right: 10px;
+        }
+
+        .store-icon img {
+            width: 36px; /* Kích thước icon */
+            height: 36px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .store-icon img:hover {
+            transform: scale(1.1);
+        }
+        #lienhe h2 {
+            font-size: 24px; /* Tăng kích thước tiêu đề */
+        }
+
+        #lienhe p {
+            font-size: 18px; /* Tăng kích thước chữ thông tin */
+            margin-bottom: 10px;
+        }
+
+        .lienhe-link {
+            display: flex;
+            align-items: center; /* Căn giữa icon và chữ */
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .lienhe-link img {
+            width: 30px; /* Kích thước icon */
+            height: auto;
+            margin-right: 10px; /* Khoảng cách giữa icon và chữ */
+        }
+
+
     </style>
 </head>
 <body>
     <!-- Thanh điều hướng -->
-    <div class="navbar">
+    <button class="menu-button" onclick="toggleMenu()">☰ Menu</button>
+    <div class="navbar" id="navbar">
         <a href="#gioithieu">Giới thiệu sản phẩm</a>
         <a href="#hinhanh">Hình ảnh sản phẩm</a>
         <a href="#chungnhan">Chứng nhận</a>
@@ -312,20 +406,39 @@
     <div class="container" id="hinhanh">
         <h2>Danh sách sản phẩm</h2>
 
-            <div class="product" onclick="openModal(0)">
-                <img src="https://imgur.com/2RRCKKB.png" alt="Trà Tân Cương - Thái Nguyên - 100g">
+        <div class="product" onclick="openModal(0)">
+            <img src="https://imgur.com/2RRCKKB.png" alt="Trà Tân Cương - Thái Nguyên - 100g">
+            <div class="product-info">
+                <a href="https://shopee.vn/100g-ch%C3%A8-kh%C3%B4-Long-V%C3%A2n-th%C6%B0%E1%BB%A3ng-h%E1%BA%A1ng-th%C6%A1m-ngon-%C4%91%E1%BA%ADm-v%E1%BB%8B-t%C3%BAi-%C4%91%E1%BB%8F-i.528855198.27976156768" 
+                   target="_blank" class="store-icon" onclick="event.stopPropagation();">
+                    <img src="https://imgur.com/844LrPu.png" alt="Cửa hàng">
+                </a>
                 <p class="blink">Trà Tân Cương - Thái Nguyên - 100g</p>
             </div>
-            
-            <div class="product" onclick="openModal(1)">
-                <img src="https://imgur.com/q6a2ifM.png" alt="Trà Tân Cương - Thái Nguyên - 50g">
+        </div>
+        
+        <div class="product" onclick="openModal(1)">
+            <img src="https://imgur.com/q6a2ifM.png" alt="Trà Tân Cương - Thái Nguyên - 50g">
+            <div class="product-info">
+                <a href="https://shopee.vn/50g-ch%C3%A8-kh%C3%B4-Long-V%C3%A2n-th%C6%B0%E1%BB%A3ng-h%E1%BA%A1ng-th%C6%A1m-ngon-%C4%91%E1%BA%ADm-v%E1%BB%8B-t%C3%BAi-v%C3%A0ng-l%E1%BB%A5a-i.528855198.24091417433"
+                   target="_blank" class="store-icon" onclick="event.stopPropagation();">
+                    <img src="https://imgur.com/844LrPu.png" alt="Cửa hàng">
+                </a>
                 <p class="blink">Trà Tân Cương - Thái Nguyên - 50g</p>
             </div>
-            
-            <div class="product" onclick="openModal(2)">
-                <img src="https://imgur.com/krS5IlT.png" alt="Trà xanh đặc sản - 100g">
+        </div>
+        
+        <div class="product" onclick="openModal(2)">
+            <img src="https://imgur.com/krS5IlT.png" alt="Trà xanh đặc sản - 100g">
+            <div class="product-info">
+                <a href="https://shopee.vn/100g-Ch%C3%A8-xanh-Th%C3%A1i-Nguy%C3%AAn-thanh-m%C3%A1t-h%E1%BB%97-tr%E1%BB%A3-gi%E1%BA%A3m-c%C3%A2n-ch%E1%BB%91ng-l%C3%A3o-ho%C3%A1-i.528855198.28423163598" 
+                   target="_blank" class="store-icon" onclick="event.stopPropagation();">
+                    <img src="https://imgur.com/844LrPu.png" alt="Cửa hàng">
+                </a>
                 <p class="blink">Trà xanh đặc sản - 100g</p>
             </div>
+        </div>
+        
 
             <!-- Modal -->
             <div id="imageModal" class="modal">
@@ -404,12 +517,10 @@
     </div>
     <div class="container" id="chungnhan">
         <h2>Chứng nhận</h2>
-        <div class="row">
+        <div id="row" >
             <img src="https://i.imgur.com/7VipU7F.jpg" alt="Giấy chứng nhận" onclick="openModal1('https://i.imgur.com/7VipU7F.jpg', 0)">
             <img src="https://i.imgur.com/kRU6w7l.jpg" alt="Giấy chứng nhận" onclick="openModal1('https://i.imgur.com/kRU6w7l.jpg', 1)">
             <img src="https://i.imgur.com/xoDO619.jpg" alt="Giấy chứng nhận" onclick="openModal1('https://i.imgur.com/xoDO619.jpg', 2)">
-        </div>
-        <div class="row">
             <img src="https://i.imgur.com/xoDO619.jpg" alt="Giấy chứng nhận" onclick="openModal1('https://i.imgur.com/f90Iq24.jpg', 3)">
             <img src="https://i.imgur.com/xoDO619.jpg" alt="Giấy chứng nhận" onclick="openModal1('https://i.imgur.com/9BHts99.jpg', 4)">
         </div>
@@ -424,6 +535,10 @@
 
     
     <script>
+         function toggleMenu() {
+            const navbar = document.getElementById("navbar");
+            navbar.classList.toggle("show-menu");
+        }
         const certificateImages1 = [
             "https://i.imgur.com/7VipU7F.jpg",
             "https://i.imgur.com/kRU6w7l.jpg",
@@ -456,13 +571,14 @@
 
     <div class="container" id="lienhe">
         <h2>Thông Tin Liên Hệ</h2>
-        <p><b>Địa chỉ:</b> Xã Tiên Hội - huyện  Đai Từ - Thái Nguyên</p>
+        <p><b>Địa chỉ:</b> Xã Tiên Hội - huyện Đại Từ - Thái Nguyên</p>
         <p><b>Điện thoại:</b> 0966181811</p>
-        <p><b>Email:</b> info@chenuiviet.com</p>
-        <a href="https://shopee.vn/huybdndh" target="_blank" class="store-icon">
+        <a href="https://shopee.vn/huybdndh" target="_blank" class="lienhe-link">
             <img src="https://imgur.com/844LrPu.png" alt="Cửa hàng">
+            Mua ngay tại đây
         </a>
-</div>
+    </div>
+
     
     <div class="verify-title">
         CẢM ƠN QUÝ KHÁCH ĐÃ SỬ DỤNG SẢN PHẨM CỦA CHÚNG TÔI
